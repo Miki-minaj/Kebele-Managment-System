@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 	"text/template"
 
@@ -10,8 +11,8 @@ import (
 )
 
 type info struct {
-	id   string
-	name string
+	Name string
+	ID   string
 }
 
 const (
@@ -22,52 +23,83 @@ const (
 	dbname   = "test"
 )
 
-var templ = template.Must(template.ParseFiles("newtest.html"))
+var templ = template.Must(template.ParseFiles("newtest.html", "form.html"))
+var db *sql.DB
 
-func index(w http.ResponseWriter, r *http.Request) {
-
+func init() {
+	var err error
+	fmt.Println("This will get called on main initialization")
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
-	db, err := sql.Open("postgres", psqlInfo)
+	db, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		//panic(err)
 	}
-	defer db.Close()
+	//defer db.Close()
 
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		//panic(err)
 	}
 
 	fmt.Println("Successfully connected!")
+}
+func index(w http.ResponseWriter, r *http.Request) {
+	// var err error
 
-	rows, err := db.Query("SELECT id,name FROM infos")
-	infos := make([]info, 0)
-	for rows.Next() {
-		in := info{}
-		//var id int
-		//var name string
+	// rows, err := db.Query("SELECT id,name FROM infos")
+	// if err != nil {
+	// 	//fmt.Println("error")
+	// }
+	// xc := []info{}
+	// for rows.Next() {
+	// 	in := info{}
+	// 	//var id int
+	// 	//var name string
 
-		err = rows.Scan(&in.id, &in.name)
+	// 	rows.Scan(&in.ID, &in.Name)
 
-		infos = append(infos, in)
+	// 	xc = append(xc, in)
 
-		//panic(err)
-		fmt.Println("id | name ")
-		fmt.Println(in.id, in.name)
-	}
+	// 	//panic(err)
+	// 	//fmt.Println("id | name ")
+	// 	//fmt.Println(in.ID, in.Name)
+	// }
 
 	//w.Write([]byte("<h1>Hello World!</h1>"))
 	//info := personalinfo{"Miki",20}
-	templ.Execute(w, infos)
+	templ.ExecuteTemplate(w, "form.html", "hey")
 
 }
 
-func main() {
+func insert(w http.ResponseWriter, r *http.Request) {
+	var err error
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	id := r.FormValue("iid")
+	name := r.FormValue("fname")
+	fmt.Println(name)
+	fmt.Println(id)
+	sqlStatement := `
+	INSERT INTO infos (id,name)
+	VALUES (` + id + `,'` + name + `')`
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", index)
-	http.ListenAndServe(":8080", mux)
+	db.Query(sqlStatement)
+	if err != nil {
+		log.Fatal("no open , error")
+	}
+	templ.Execute(w, "newtest.html")
+	//fmt.Println("This will get called on main initialization")
+}
+
+func main() {
+	//defer db.Close()
+	//mux := http.NewServeMux()
+	http.HandleFunc("/", index)
+	http.HandleFunc("/f", insert)
+	http.ListenAndServe(":8080", nil)
 
 }

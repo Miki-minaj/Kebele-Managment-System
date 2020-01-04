@@ -4,10 +4,13 @@
         <title>Test</title>
     </head>
     <body>
-        {{range .}}
+        
         <p>its to assure the database is connected succesfully with this webpage</p>
-        <p>{{.id}}</p>
-        <p>{{.name}}</p>
+        
+        {{range .}}
+        <p>id---{{.ID}}</p>
+        <p>Name --{{.Name}}</p>
         {{end}}
+        
     </body>
 </html>
