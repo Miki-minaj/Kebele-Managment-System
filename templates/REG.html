@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>introduction to bootstrap</title>
+        <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+        <link href="asset/css/Register.css" rel="stylesheet">
+        <script src="assets/js/jquery-2.2.4.min.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+      .jumbotron {
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+            height:100px;
+            margin-bottom: 50px;
+            
+          }
+          .img-circle {
+    border-radius: 50%;
+    padding-bottom: 15px;
+    border-inline-color: black;
+}
+    
+  </style>
+  <script>
+    $('tr#ClickableRow').click(function () {
+  var url = $(this).find('a:first').attr('href');
+  window.location.href = url;
+});
+  </script>
+        
+        
+    </head>
+    <body class="all">
+            <header>
+                    <div class="jumbotron bg-info text-white text-center" style="background:rgb(245, 241, 241);">
+                       <div class="container">
+                            <h4 class="display-4"> KEBELE MANAGEMENT SYSTEM</h4>
+                            
+                        </div>
+                    </div>
+            </header>
+            <div class="container">
+                    <table class="content-table">
+                        <thead>
+                          <tr >
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>zone</th>
+                            <th>woreda</th>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Points</th>
+                            <th>Team</th>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Points</th>
+                            <th>Team</th>
+                            <th>Rank</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+                          {{range .}}
+                          <tr class="active-row">
+                            <td>2</td>
+                            <td>{{.ID}}</td>
+                            <td>{{.Name}}</td>
+                            <td>Students</td>
+                            <td>1</td>
+                            <td>Domenic</td>
+                            <td>88,110</td>
+                            <td>dcode</td>
+                            <td>1</td>
+                            <td>Domenic</td>
+                            <td>88,110</td>
+                            <td>dcode</td>
+                            <td>1</td>
+                           
+                          </tr>
+                          {{end}}
+                       
+                           
+                          </tr>
+
+                        </tbody>
+                      </table>
+                </div>
+                    
+                
+                   
+                     
+                    
+    </body>
+                	
+      
+     	
+        
+    
+</html>

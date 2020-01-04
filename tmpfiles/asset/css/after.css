@@ -1,0 +1,54 @@
+.row {background-color:lavender}
+ 
+.col1{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:silver;
+}
+ 
+.col2{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:#faebd7;
+}
+ 
+.col3{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:skyblue;
+}
+ 
+.col4{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:red;
+}
+ 
+.col5{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:darkgreen;
+}
+ 
+.col6{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:orange;
+}
+ 
+.col7{
+    margin:3px;
+    min-height:300px;
+    text-align:center;
+    background-color:beige;
+}
+ 
+#test{
+    margin:5px;
+}

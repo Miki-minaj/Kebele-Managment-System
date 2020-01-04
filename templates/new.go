@@ -23,7 +23,7 @@ const (
 	dbname   = "test"
 )
 
-var templ = template.Must(template.ParseGlob("templates/*.html"))
+var templ = template.Must(template.ParseFiles("kebele.html", "REG.html"))
 var db *sql.DB
 
 func init() {
@@ -122,11 +122,11 @@ func show(w http.ResponseWriter, r *http.Request) {
 func main() {
 	//defer db.Close()
 	//mux := http.NewServeMux()
-	fs := http.FileServer(http.Dir("./templates/asset"))
+	fs := http.FileServer(http.Dir("asset"))
 	http.HandleFunc("/", index)
 	http.HandleFunc("/f", insert)
 	http.HandleFunc("/r", show)
-	http.Handle("/templates/", http.StripPrefix("/templates/", fs))
+	http.Handle("/asset/", http.StripPrefix("/asset/", fs))
 	http.ListenAndServe(":8080", nil)
 
 }
