@@ -120,7 +120,7 @@ func show(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	//defer db.Close()
+	////defer db.Close()
 	//mux := http.NewServeMux()
 	fs := http.FileServer(http.Dir("./templates/asset"))
 	http.HandleFunc("/", index)
