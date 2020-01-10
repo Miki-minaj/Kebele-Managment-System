@@ -23,6 +23,7 @@ const (
 	dbname   = "test"
 )
 
+//check
 var templ = template.Must(template.ParseFiles("kebele.html", "REG.html"))
 var db *sql.DB
 
