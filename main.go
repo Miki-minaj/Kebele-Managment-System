@@ -19,6 +19,7 @@ const (
 	dbname   = "test"
 )
 
+//hena
 func main() {
 	var db *sql.DB
 	var err error
