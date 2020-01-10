@@ -2,7 +2,8 @@ package menu
 
 import "github.com/miki-minaj/Kebele-Managment-System/entity"
 
-// Service service
-type Service interface {
-	StoreInformations(informations entity.Infos)
+// CategoryService specifies food menu category services
+type CategoryService interface {
+	StoreCategory(category *entity.Category) (*entity.Category, error)
+	Categories() ([]entity.Category, error)
 }

@@ -1,7 +1,7 @@
 package entity
 
-type Infos struct {
-	ID          int
+type Category struct {
+	ID          string
 	Name        string
 	Mothername  string
 	Image       string
