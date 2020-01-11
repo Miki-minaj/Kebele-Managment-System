@@ -2,11 +2,7 @@ package handler
 
 import (
 	"fmt"
-	"io"
-	"mime/multipart"
 	"net/http"
-	"os"
-	"path/filepath"
 	"text/template"
 
 	"github.com/miki-minaj/Kebele-Managment-System/entity"
@@ -31,14 +27,23 @@ func (ach *AdminCategoryHandler) AdminCategoriesNew(w http.ResponseWriter, r *ht
 		ctg := &entity.Category{}
 		ctg.Name = r.FormValue("fname")
 		ctg.ID = r.FormValue("iid")
-		mf, fh, err := r.FormFile("catimg")
-		if err != nil {
-			panic(err)
-		}
-		defer mf.Close()
-		ctg.Image = fh.Filename
+		ctg.Mothername = r.FormValue("mother'sname")
+		ctg.AGE = r.FormValue("age")
+		ctg.Occupation = r.FormValue("occu")
+		ctg.Relegion = r.FormValue("relegion")
+		ctg.Nationality = r.FormValue("nationality")
+		ctg.Phonenumber = r.FormValue("phonenum")
+		ctg.Emergencyname = r.FormValue("emergencyn")
+		ctg.Emergencyphone = r.FormValue("emergencyp")
 
-		writeFile(&mf, fh.Filename)
+		// mf, fh, err := r.FormFile("catimg")
+		// if err != nil {
+		// 	panic(err)
+		// }
+		// defer mf.Close()
+		// ctg.Image = fh.Filename
+
+		// writeFile(&mf, fh.Filename)
 		//ctg.Description = r.FormValue("description")
 
 		_, errs := ach.categorySrv.StoreCategory(ctg)
@@ -55,6 +60,10 @@ func (ach *AdminCategoryHandler) AdminCategoriesNew(w http.ResponseWriter, r *ht
 		ach.tmpl.ExecuteTemplate(w, "REG.html", nil)
 
 	}
+	// ctg.AGE = r.FormValue("age")
+	// ctg.Occupation = r.FormValue("occu")
+	// ctg.Relegion = r.FormValue("relegion")
+	// ctg.Nationality = r.FormValue("nationality")
 }
 
 // AdminCategories handle requests on route /admin/categories
@@ -66,20 +75,20 @@ func (ach *AdminCategoryHandler) AdminCategories(w http.ResponseWriter, r *http.
 	ach.tmpl.ExecuteTemplate(w, "REG.html", categories)
 }
 
-func writeFile(mf *multipart.File, fname string) {
+// func writeFile(mf *multipart.File, fname string) {
 
-	wd, err := os.Getwd()
+// 	wd, err := os.Getwd()
 
-	if err != nil {
-		panic(err)
-	}
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	path := filepath.Join(wd, "src", "github.com", "miki-minaj", fname)
-	image, err := os.Create(path)
+// 	path := filepath.Join(wd, "src", "github.com", "miki-minaj", fname)
+// 	image, err := os.Create(path)
 
-	if err != nil {
-		panic(err)
-	}
-	defer image.Close()
-	io.Copy(image, *mf)
-}
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer image.Close()
+// 	io.Copy(image, *mf)
+// }

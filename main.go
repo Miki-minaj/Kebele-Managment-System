@@ -16,7 +16,7 @@ const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
-	password = "1234"
+	password = "miki"
 	dbname   = "test"
 )
 
@@ -66,7 +66,7 @@ func main() {
 	adminhandler := handler.NewAdminCategoryHandler(templ, categoryServ)
 
 	//http.HandleFunc("/f", insert)
-	fs := http.FileServer(http.Dir("github.com/miki-minaj/Kebele-Managment-System/templates/asset"))
+	fs := http.FileServer(http.Dir("./templates/asset"))
 	http.HandleFunc("/", index)
 	http.HandleFunc("/f", adminhandler.AdminCategoriesNew)
 	http.HandleFunc("/s", adminhandler.AdminCategories)

@@ -46,17 +46,16 @@
                           <tr >
                             <th>ID</th>
                             <th>Name</th>
-                            <th>zone</th>
-                            <th>woreda</th>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Points</th>
-                            <th>Team</th>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>Points</th>
-                            <th>Team</th>
-                            <th>Rank</th>
+                            <th>Mother's Name</th>
+                            <th>sex</th>
+                            <th>Age</th>
+                            <th>Relegion</th>
+                            <th>Occupation</th>
+                            <th>Nationality</th>
+                            <th>Phone Number</th>
+                            <th>Emergency Contact Name</th>
+                            <th>Emergency Contact Phone</th>
+                          
                             
                           </tr>
                         </thead>
@@ -64,19 +63,19 @@
                           
                           {{range .}}
                           <tr class="active-row">
-                            <td>2</td>
+                            
                             <td>{{.ID}}</td>
                             <td>{{.Name}}</td>
-                            <td>Students</td>
-                            <td>1</td>
-                            <td>Domenic</td>
-                            <td>88,110</td>
-                            <td>dcode</td>
-                            <td>1</td>
-                            <td>Domenic</td>
-                            <td>88,110</td>
-                            <td>dcode</td>
-                            <td>1</td>
+                            <td>{{.Mothername}}</td>
+                            <td>none</td>
+                            <td>{{.AGE}}</td>
+                            <td>{{.Relegion}}</td>
+                            <td>{{.Occupation}}</td>
+                            <td>{{.Nationality}}</td>
+                            <td>{{.Phonenumber}}</td>
+                            <td>{{.Emergencyname}}</td>
+                            <td>{{.Emergencyphone}}</td>
+                            
                            
                           </tr>
                           {{end}}
