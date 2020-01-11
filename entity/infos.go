@@ -1,16 +1,16 @@
 package entity
 
 type Category struct {
-	ID             string
-	Name           string
-	Mothername     string
-	Image          string
-	AGE            string
-	Occupation     string
-	Relegion       string
-	Nationality    string
-	Phonenumber    string
-	Sex            string
-	Emergencyname  string
-	Emergencyphone string
+	ID             string `json:"id"`
+	Name           string `json:"fullname"`
+	Mothername     string `json:"mothername"`
+	Image          string `json:"image"`
+	AGE            string `json:"age"`
+	Occupation     string `json:"occupation"`
+	Relegion       string `json:"relegion"`
+	Nationality    string `json:"natitionality"`
+	Phonenumber    string `json:"phonenumber"`
+	Sex            string `json:"sex"`
+	Emergencyname  string `json:"emergencyname"`
+	Emergencyphone string `json:"emergencyphone"`
 }
