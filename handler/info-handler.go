@@ -37,7 +37,15 @@ func (ach *AdminCategoryHandler) AdminCategoriesNew(w http.ResponseWriter, r *ht
 		ctg.Emergencyname = r.FormValue("emergencyn")
 		ctg.Emergencyphone = r.FormValue("emergencyp")
 
-		
+		// mf, fh, err := r.FormFile("catimg")
+		// if err != nil {
+		// 	panic(err)
+		// }
+		// defer mf.Close()
+		// ctg.Image = fh.Filename
+
+		// writeFile(&mf, fh.Filename)
+		//ctg.Description = r.FormValue("description")
 
 		_, errs := ach.categorySrv.StoreCategory(ctg)
 
@@ -89,7 +97,7 @@ func (ach *AdminCategoryHandler) AdminCategoriesDelete(w http.ResponseWriter, r 
 
 	}
 
-	http.Redirect(w, r, "REG.html", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/categories", http.StatusSeeOther)
 }
 
 // func writeFile(mf *multipart.File, fname string) {
