@@ -74,3 +74,29 @@ func (cri *CategoryRepositoryImpl) Categories() ([]entity.Category, error) {
 
 	return ctgs, nil
 }
+
+// Category returns a category with a given id
+func (cri *CategoryRepositoryImpl) Category(id int) (entity.Category, error) {
+
+	row := cri.conn.QueryRow("SELECT * FROM categories WHERE name ='henock yonas'")
+
+	category := entity.Category{}
+
+	err := row.Scan(&category.ID, &category.Name, &category.Mothername, &category.Sex, &category.AGE, &category.Relegion, &category.Occupation, &category.Phonenumber, &category.Nationality, &category.Emergencyname, &category.Emergencyphone)
+	if err != nil {
+		return category, err
+	}
+
+	return category, nil
+}
+
+// DeleteCategory removes a category from a database by its id
+func (cri *CategoryRepositoryImpl) DeleteCategory(id int) error {
+
+	_, err := cri.conn.Exec("DELETE FROM categories WHERE name = 'henock yonas'")
+	if err != nil {
+		return errors.New("Delete has failed")
+	}
+
+	return nil
+}

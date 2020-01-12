@@ -28,7 +28,6 @@ func (cs *CategoryService) StoreCategory(category *entity.Category) (*entity.Cat
 
 	return cat, nil
 }
-
 func (cs *CategoryService) Categories() ([]entity.Category, error) {
 
 	categories, errs := cs.categoryRepo.Categories()
@@ -38,4 +37,23 @@ func (cs *CategoryService) Categories() ([]entity.Category, error) {
 	}
 
 	return categories, nil
+}
+func (cs *CategoryService) Category(id int) (entity.Category, error) {
+
+	c, err := cs.categoryRepo.Category(id)
+
+	if err != nil {
+		return c, err
+	}
+	return c, nil
+}
+
+// DeleteCategory delete a category by its id
+func (cs *CategoryService) DeleteCategory(id int) error {
+
+	err := cs.categoryRepo.DeleteCategory(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
