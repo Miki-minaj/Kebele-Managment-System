@@ -2,39 +2,61 @@ package handler
 
 import (
 	"fmt"
+	"html/template"
 	"io"
 	"mime/multipart"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
-	"text/template"
+
+	"github.com/miki-minaj/Kebele-Managment-System/form"
 
 	"github.com/jung-kurt/gofpdf"
 	"github.com/miki-minaj/Kebele-Managment-System/entity"
 	"github.com/miki-minaj/Kebele-Managment-System/menu"
+	"github.com/miki-minaj/Kebele-Managment-System/rtoken"
 )
 
 type AdminCategoryHandler struct {
 	tmpl        *template.Template
 	categorySrv menu.CategoryRepository
+	csrfSignKey []byte
 }
 
 // NewAdminCategoryHandler initializes and returns new AdminCateogryHandler
-func NewAdminCategoryHandler(t *template.Template, cs menu.CategoryRepository) *AdminCategoryHandler {
-	return &AdminCategoryHandler{tmpl: t, categorySrv: cs}
+func NewAdminCategoryHandler(t *template.Template, cs menu.CategoryRepository, csKey []byte) *AdminCategoryHandler {
+	return &AdminCategoryHandler{tmpl: t, categorySrv: cs, csrfSignKey: csKey}
 }
 func (ach *AdminCategoryHandler) Index(w http.ResponseWriter, r *http.Request) {
 
 	//info := personalinfo{"Miki",20}
-	ach.tmpl.ExecuteTemplate(w, "kebele.html", "hey")
+	ach.tmpl.ExecuteTemplate(w, "kkebele.html", "hey")
 
 }
 
 // AdminCategoriesNew hanlde requests on route /admin/categories/new
 func (ach *AdminCategoryHandler) AdminCategoriesNew(w http.ResponseWriter, r *http.Request) {
+	token, err := rtoken.CSRFToken(ach.csrfSignKey)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+	}
+	if r.Method == http.MethodGet {
+		newCatForm := struct {
+			Values  url.Values
+			VErrors form.ValidationErrors
+			CSRF    string
+		}{
+			Values:  nil,
+			VErrors: nil,
+			CSRF:    token,
+		}
+		ach.tmpl.ExecuteTemplate(w, "kkebele.html", newCatForm)
+	}
 
 	if r.Method == http.MethodPost {
+
 		fmt.Println("pass")
 		ctg := &entity.Category{}
 		ctg.Name = r.FormValue("fname")
@@ -90,6 +112,9 @@ func (ach *AdminCategoryHandler) AdminCategoriesNew(w http.ResponseWriter, r *ht
 
 // AdminCategories handle requests on route /admin/categories
 func (ach *AdminCategoryHandler) AdminCategories(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+
+	}
 	categories, errs := ach.categorySrv.Categories()
 	if errs != nil {
 		panic(errs)
