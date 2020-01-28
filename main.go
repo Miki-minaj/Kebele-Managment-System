@@ -37,8 +37,8 @@ func main() {
 
 	catagoryRepo := mrepim.NewCategoryRepositoryImpl(db)
 	categoryServ := msrvim.NewCategoryService(catagoryRepo)
-	adminhandler := handler.NewAdminCategoryHandler(templ, categoryServ)
-	navhandler := handler.NewMenuHandler(templ, categoryServ)
+	//adminhandler := handler.NewAdminCategoryHandler(templ, categoryServ)
+	navhandler := handler.NewAdminCategoryHandler(templ, categoryServ)
 
 	apiinforepo := mrepim.NewCategoryRepositoryImpl(db)
 	apiinfoserv := msrvim.NewCategoryService(apiinforepo)
@@ -51,8 +51,10 @@ func main() {
 	//http.HandleFunc("/f", insert)
 	fs := http.FileServer(http.Dir("./templates/asset"))
 	http.HandleFunc("/", navhandler.Index)
-	http.HandleFunc("/f", adminhandler.AdminCategoriesNew)
-	http.HandleFunc("/s", adminhandler.AdminCategories)
+	http.HandleFunc("/f", navhandler.AdminCategoriesNew)
+	http.HandleFunc("/s", navhandler.AdminSearch)
+	http.HandleFunc("/sa", navhandler.AdminCategories)
 	http.Handle("/asset/", http.StripPrefix("/asset/", fs))
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":8080", nil)
+
 }

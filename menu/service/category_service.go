@@ -38,9 +38,9 @@ func (cs *CategoryService) Categories() ([]entity.Category, error) {
 
 	return categories, nil
 }
-func (cs *CategoryService) Category(id int) (entity.Category, error) {
+func (cs *CategoryService) Category(name string) ([]entity.Category, error) {
 
-	c, err := cs.categoryRepo.Category(id)
+	c, err := cs.categoryRepo.Category(name)
 
 	if err != nil {
 		return c, err

@@ -30,6 +30,7 @@ func (cri *CategoryRepositoryImpl) StoreCategory(c *entity.Category) (*entity.Ca
 	emer := c.Emergencyname
 	emerph := c.Emergencyphone
 	sex := "male"
+	im := c.Image
 	fmt.Println(id)
 	fmt.Println(name)
 	fmt.Println(mother)
@@ -41,8 +42,8 @@ func (cri *CategoryRepositoryImpl) StoreCategory(c *entity.Category) (*entity.Ca
 	fmt.Println(emer)
 	fmt.Println(emerph)
 	sqlStatement := `
-	INSERT INTO infos (id,name,mothername,sex,age,religion,occupations,phonenum,nationality,emrgecyname,emergecyphone)
-	VALUES (` + id + `,'` + name + `','` + mother + `','` + sex + `',` + age + `,'` + relegion + `','` + occup + `',` + phone + `,'` + nation + `','` + emer + `','` + emerph + `')`
+	INSERT INTO infos (id,name,mothername,sex,age,religion,occupations,phonenum,nationality,emrgecyname,emergecyphone,image)
+	VALUES (` + id + `,'` + name + `','` + mother + `','` + sex + `',` + age + `,'` + relegion + `','` + occup + `',` + phone + `,'` + nation + `','` + emer + `',` + emerph + `,'` + im + `')`
 
 	_, err := cri.conn.Query(sqlStatement)
 	if err != nil {
@@ -65,7 +66,7 @@ func (cri *CategoryRepositoryImpl) Categories() ([]entity.Category, error) {
 
 	for rows.Next() {
 		category := entity.Category{}
-		err = rows.Scan(&category.ID, &category.Name, &category.Mothername, &category.Sex, &category.AGE, &category.Relegion, &category.Occupation, &category.Phonenumber, &category.Nationality, &category.Emergencyname, &category.Emergencyphone)
+		err = rows.Scan(&category.ID, &category.Name, &category.Mothername, &category.Sex, &category.AGE, &category.Relegion, &category.Occupation, &category.Phonenumber, &category.Nationality, &category.Emergencyname, &category.Emergencyphone, &category.Image)
 		if err != nil {
 			return nil, err
 		}
@@ -76,18 +77,24 @@ func (cri *CategoryRepositoryImpl) Categories() ([]entity.Category, error) {
 }
 
 // Category returns a category with a given id
-func (cri *CategoryRepositoryImpl) Category(id int) (entity.Category, error) {
+func (cri *CategoryRepositoryImpl) Category(name string) ([]entity.Category, error) {
+	fmt.Println("um trying")
+	satement := `SELECT * FROM infos WHERE name ='` + name + `'`
+	row, _ := cri.conn.Query(satement)
 
-	row := cri.conn.QueryRow("SELECT * FROM categories WHERE name ='henock yonas'")
+	ctgs := []entity.Category{}
 
-	category := entity.Category{}
+	for row.Next() {
+		category := entity.Category{}
+		err := row.Scan(&category.ID, &category.Name, &category.Mothername, &category.Sex, &category.AGE, &category.Relegion, &category.Occupation, &category.Phonenumber, &category.Nationality, &category.Emergencyname, &category.Emergencyphone, &category.Image)
+		if err != nil {
+			return nil, err
+		}
+		ctgs = append(ctgs, category)
 
-	err := row.Scan(&category.ID, &category.Name, &category.Mothername, &category.Sex, &category.AGE, &category.Relegion, &category.Occupation, &category.Phonenumber, &category.Nationality, &category.Emergencyname, &category.Emergencyphone)
-	if err != nil {
-		return category, err
 	}
 
-	return category, nil
+	return ctgs, nil
 }
 
 // DeleteCategory removes a category from a database by its id

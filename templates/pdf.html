@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>embed pdf in html page</title>
+        
+        
+        
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+        .jumbotron {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+        height:100px;
+        margin-bottom: 1px;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+       background-size: cover;
+        
+      }
+    </style>
+    
+
+    <body class="all">
+            <header class="responsive">
+                    <div class="jumbotron bg-info text-white text-center" style="background:rgb(245, 241, 241);">
+                       <div class="container">
+                            <h4 class="display-4"> KEBELE MANAGEMENT SYSTEM</h4>
+                            
+                        </div>
+                    </div>
+            </header>
+           
+        <div class="embed-responsive embed-responsive-16by9">
+                <div>{{.}}</div>
+                <embed class="embed-responsive-item" type="application/pdf" src="/{{ . }}" style=" margin-left: 250px; margin-top: 50px; width: 50%; height:500px"></embed>
+        </div>{{.}}</div>
+    </body>
+</html>
